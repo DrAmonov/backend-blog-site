@@ -29,7 +29,7 @@ const io = new Server(server, {
 });
 
 app.use(express.static(__dirname + '/public'));
-
+// asdasdas;
 // const commments = Comments.read();
 
 io.on('connection', (socket) => {

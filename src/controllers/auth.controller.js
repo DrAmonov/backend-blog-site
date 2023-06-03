@@ -8,13 +8,12 @@ const User = require('../models/User');
 
 const register = async (req, res) => {
 	try {
-		const { username, password, phone_number } = req.body;
+		const { username, password } = req.body;
 		const schema = Joi.object({
 			username: Joi.string().required(),
 			password: Joi.string().required(),
-			phone_number: Joi.number(),
 		});
-		const { error } = schema.validate({ username, password, phone_number });
+		const { error } = schema.validate({ username, password });
 		if (error) {
 			return res.status(400).json({ message: 'Password or login is invalid!' });
 		}
@@ -25,7 +24,7 @@ const register = async (req, res) => {
 		if (findUser) {
 			res.status(403).json({ message: 'User already existed!' });
 		} else {
-			const newUser = new User(id, username, hashedPassword, phone_number);
+			const newUser = new User(id, username, hashedPassword);
 			const data = users.length ? [...users, newUser] : [newUser];
 			Users.write(data);
 			const token = jwt.sign({ id: newUser.id });

@@ -28,12 +28,12 @@ const posts = async (req, res) => {
 			);
 			const data = posts ? [...posts, newPost] : [newPost];
 			Posts.write(data);
-			res.status(201).json({ message: 'successfully posted' });
+			res.status(201).json({ message: 'success' });
 		} else {
-			res.status(403).json({ message: 'profile not found' });
+			res.status(403).json({ message: ' not found' });
 		}
 	} catch (error) {
-		res.status(500).json({ error: 'internal error' });
+		res.status(500).json({ error: error.message });
 	}
 };
 
@@ -57,7 +57,6 @@ const postsEdite = async (req, res) => {
 		findPost.description = description;
 
 		if (img) {
-			//rasmni eskisini chopmaydi
 			const newImgName = ` ${uuid()}.${img.mimetype.split('/')[1]}`;
 			img.mv(`${process.cwd()}/uploads/${newImgName}`);
 			findPost.img = newImgName;
@@ -65,7 +64,7 @@ const postsEdite = async (req, res) => {
 			findPost.img = findPost.img;
 		}
 		Posts.write(posts);
-		res.status(201).json({ message: 'Succsessfully edited!' });
+		res.status(201).json({ message: 'Succsess!' });
 	}
 };
 
@@ -80,7 +79,7 @@ const postsDelete = async (req, res) => {
 
 	if (!findPost || !findUser) {
 		res.status(404).json({
-			message: "Post's id is undefined or This post is not owned by you",
+			message: "Not your post",
 		});
 	} else {
 		const filtredPosts = await posts.filter((post) => post.post_id !== postId);

@@ -17,7 +17,7 @@ const viewCounter = async (req, res) => {
 		);
 
 		if (findUserView) {
-			res.status(403).json({ message: 'this users already view!' });
+			res.status(403).json({ message: ' view!' });
 		} else {
 			const newView = { view_id, user_id };
 			const data = views.length ? [...views, newView] : [newView];
@@ -25,7 +25,7 @@ const viewCounter = async (req, res) => {
 			res.status(201).json({ message: 'View' });
 		}
 	} else {
-		res.status(403).json({ message: 'User id is not undefined!' });
+		res.status(403).json({ message: 'User id is not defined!' });
 	}
 
 	findViewPost.viewCountes = views.length;

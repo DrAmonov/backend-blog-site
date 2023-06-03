@@ -4,6 +4,6 @@ const isAuth = require('../middleware/isAuths');
 
 const router = Router();
 
-router.post('/api/profile', isAuth, profile);
+router.post('/profile', isAuth, profile);
 
 module.exports = router;

@@ -4,6 +4,6 @@ const isAuth = require('../middleware/isAuths');
 
 const router = Router();
 
-router.post('/api/posts/likes/:id', isAuth, likes);
+router.post('/likes/:id', isAuth, likes);
 
 module.exports = router;

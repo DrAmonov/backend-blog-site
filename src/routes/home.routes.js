@@ -3,6 +3,6 @@ const { home } = require('../controllers/home.controller');
 
 const router = Router();
 
-router.get('/api/', home);
+router.get('/', home);
 
 module.exports = router;
