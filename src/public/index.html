@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Blog Page</title>
+		<style>
+			#comments-section {
+				margin-top: 20px;
+				border: 1px solid #ccc;
+				padding: 10px;
+			}
+			#comment-input {
+				margin-top: 10px;
+			}
+		</style>
+	</head>
+	<body>
+		<h1>Blog Title</h1>
+		<p>Blog content goes here.</p>
+
+		<h2>Comments</h2>
+		<div id="comments-section"></div>
+
+		<h2>Add a Comment</h2>
+		<form id="comment-form">
+			<textarea
+				id="comment-input"
+				rows="4"
+				cols="50"
+				placeholder="Enter your comment"></textarea>
+			<br />
+			<button type="submit">Submit</button>
+		</form>
+
+		<script src="/socket.io/socket.io.js"></script>
+		<script type="module">
+			import { io } from 'https://cdn.socket.io/4.4.1/socket.io.esm.min.js';
+			const socket = io('http://localhost:5000');
+
+			// When the user submits a new comment
+			document
+				.getElementById('comment-form')
+				.addEventListener('submit', (event) => {
+					event.preventDefault();
+
+					// Get the comment data from the form
+					const comment = document.getElementById('comment-input').value;
+
+					// Emit the newComment event to the server
+					socket.emit('newComment', {
+						comment: comment,
+						// Include any other relevant data like blog ID or user information
+					});
+
+					// Clear the comment input field
+					document.getElementById('comment-input').value = '';
+				});
+
+			// When the server emits a newComment event
+			socket.on('newComment', (data) => {
+				// Update the comments section with the new comment
+				const commentElement = document.createElement('p');
+				commentElement.textContent = data.comment;
+				document.getElementById('comments-section').appendChild(commentElement);
+			});
+		</script>
+	</body>
+</html>
